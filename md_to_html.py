@@ -10,7 +10,7 @@ for path, dirs, files in os.walk("Markdown/"):
             os.mkdir(os.path.join(path.replace("Markdown", "HTML"), folder))
     for file in files:
         if file.endswith('.md'):
-            path_to_root = "../"*re.subn("|".join(os.pathsep), "", path+"/")[1]
+            path_to_root = "../"*re.subn(r"[\\/]", "", path+"/")[1]
             with open(os.path.join(path, file)) as f:
                 html = markdown.markdown(f.read(), output_format="html")
             html = f"""
