@@ -1,1 +1,14 @@
-resources/lxgw-wenkai-webfont/*
+/resources/lxgw-wenkai-webfont/files/
+/resources/lxgw-wenkai-webfont/CHANGELOG.md
+/resources/lxgw-wenkai-webfont/LICENSE
+/resources/lxgw-wenkai-webfont/lxgwwenkai-bold.css
+/resources/lxgw-wenkai-webfont/lxgwwenkai-light.css
+/resources/lxgw-wenkai-webfont/lxgwwenkai-regular.css
+/resources/lxgw-wenkai-webfont/lxgwwenkaimono-bold.css
+/resources/lxgw-wenkai-webfont/lxgwwenkaimono-light.css
+/resources/lxgw-wenkai-webfont/lxgwwenkaimono-regular.css
+/resources/lxgw-wenkai-webfont/OFL.txt
+/resources/lxgw-wenkai-webfont/package.json
+/resources/lxgw-wenkai-webfont/README.md
+/resources/lxgw-wenkai-webfont/style.css
+/resources/lxgw-wenkai-webfont/VERSION
