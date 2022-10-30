@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/resources/lxgw-wenkai-webfont/files" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/es" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/languages" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/styles" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
