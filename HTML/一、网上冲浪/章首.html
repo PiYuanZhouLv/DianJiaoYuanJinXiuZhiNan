@@ -28,11 +28,30 @@
                 -moz-opacity: 0.5;
                 opacity: 0.5;
             }
-            footer > nav :nth-child(2n) > button {
-                background-color: #4891B6 !important;
+            @media (prefers-color-scheme: dark) {
+                footer > nav :nth-child(2n) > button {
+                    background-color: #66CCFF !important;
+                }
+            }
+            @media (prefers-color-scheme: light) {
+                footer > nav :nth-child(2n) > button {
+                    background-color: #0F604E !important;
+                }
             }
             button{
                 font-family: LXGW WenKai;
+            }
+            .right{
+                color: #00ff00;
+            }
+            .right::before{
+                content: "✔";
+            }
+            .wrong{
+                color: #ff0000;
+            }
+            .wrong::before{
+                content: "❌";
             }
         </style>
         <script src="../../resources/jquery-3.6.1.min.js" type="application/javascript"></script>
@@ -98,7 +117,9 @@
             </nav>
 
         </header>
-        <main></main>
+        <main><p>互联网已经成为人们生活中的一部分，也包括学习生活。</p>
+<p>这一章，我们将好好学一下我们所依赖的互联网。</p>
+<p>还等什么？Let's go!</p></main>
         <footer>
         
             <nav>

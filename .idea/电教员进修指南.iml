@@ -6,6 +6,12 @@
       <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/es" />
       <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/languages" />
       <excludeFolder url="file://$MODULE_DIR$/resources/CodeHighLight/styles" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/.github" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/.husky" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/demo" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/src" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/clipboard/test" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

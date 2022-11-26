@@ -273,11 +273,30 @@ for path, dirs, files in os.walk("Markdown/"):
                 -moz-opacity: 0.5;
                 opacity: 0.5;
             }}
-            footer > nav :nth-child(2n) > button {{
-                background-color: #4891B6 !important;
+            @media (prefers-color-scheme: dark) {{
+                footer > nav :nth-child(2n) > button {{
+                    background-color: #66CCFF !important;
+                }}
+            }}
+            @media (prefers-color-scheme: light) {{
+                footer > nav :nth-child(2n) > button {{
+                    background-color: #0F604E !important;
+                }}
             }}
             button{{
                 font-family: LXGW WenKai;
+            }}
+            .right{{
+                color: #00ff00;
+            }}
+            .right::before{{
+                content: "✔";
+            }}
+            .wrong{{
+                color: #ff0000;
+            }}
+            .wrong::before{{
+                content: "❌";
             }}
         </style>
         <script src="{path_to_root}resources/jquery-3.6.1.min.js" type="application/javascript"></script>
@@ -391,6 +410,33 @@ print('<summary>', '目录', '</summary>', file=content_table)
 print('</details>', file=content_table)
 with open('HTML/首页.html', encoding='utf-8') as f:
     content = f.read()
-content = content.replace('%ContentTable%', content_table.getvalue())
+with open('cover_final.txt', encoding='utf-8') as f:
+    cover = f.read()
+content = content.replace('%ContentTable%', content_table.getvalue()).replace('%Cover%', f'''
+<pre><div style="transform: scale(0.41);margin-top: -750;margin-bottom: -750;margin-left: -200;font-size: 12px;">{
+    cover
+}</div></pre>''').replace(
+    '%CopyButton%',
+    f'''
+<button id="copy_to_see" title="将这段代码复制到 Python Shell 中会输出源代码">复制为源代码</button>
+<button id="copy_to_run" title="将这段代码复制到 Python Shell 中会直接执行">复制为可执行代码</button>
+<script src="../resources/clipboard/dist/clipboard.min.js" type="application/javascript"></script>
+<script type="application/javascript">
+    $('#copy_to_see').click(() => {{
+        const textCopied = ClipboardJS.copy(`{cover.replace('eval(', 'print(', 1).replace(')###', '####').replace(chr(92), chr(92)*2)}`);
+        $('#copy_to_see').text('Copied!');
+        setTimeout(()=>{{$('#copy_to_see').text('复制为源代码')}}, 1000)
+        console.log('copied!', textCopied);
+    }})
+    
+    $('#copy_to_run').click(() => {{
+        const textCopied = ClipboardJS.copy(`{cover.replace(chr(92), chr(92)*2)}`);
+        $('#copy_to_run').text('Copied!');
+        setTimeout(()=>{{$('#copy_to_run').text('复制为可执行代码')}}, 1000)
+        console.log('copied!', textCopied);
+    }})
+</script>
+'''
+)
 with open('HTML/首页.html', 'w', encoding='utf-8') as f:
     f.write(content)
