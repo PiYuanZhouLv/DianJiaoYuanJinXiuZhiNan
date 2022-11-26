@@ -43,15 +43,44 @@
             }
             .right{
                 color: #00ff00;
+                font-size: 30px;
             }
             .right::before{
                 content: "✔";
             }
             .wrong{
                 color: #ff0000;
+                font-size: 30px;
             }
             .wrong::before{
                 content: "❌";
+            }
+            .showMessage{
+                padding: 10px 20px;
+                border-radius: 5px;
+                position: fixed;
+                top: 15%;
+                left: 50%;
+                color: #000000;
+                background-color: #FFFFFF;
+                border: 1px solid #F0F0F0;
+                z-index: 999;
+                transform: translate(-50%, 0);
+            }
+            .showMessageSuccess{
+                background-color: #F0F9EB;
+                border: 1px solid #E1F3D8;
+                color: #67C23A;
+            }
+            .showMessageError{
+                background-color: #FEF0F0;
+                border: 1px solid #FDE2E2;
+                color: #F76C6C;
+            }
+            .showMessageInfo{
+                background-color: #70C3E3;
+                border: 1px solid #13B8EB;
+                color: #FFFFFF;
             }
         </style>
         <script src="../../../resources/jquery-3.6.1.min.js" type="application/javascript"></script>
@@ -79,6 +108,22 @@
                     nav.insertBefore($("footer>:first-child"))
                 }
             );
+            function showMessage(message, type) {
+                let messageJQ = $("<div class='showMessage'>" + message + "</div>");
+                if (type === 0) {
+                    messageJQ.addClass("showMessageError");
+                } else if (type === 1) {
+                    messageJQ.addClass("showMessageSuccess");
+                } else if (type === 2) {
+                    messageJQ.addClass("showMessageInfo");
+                }
+                messageJQ.hide().appendTo("body").slideDown(400);
+                window.setTimeout(function(){
+                    messageJQ.show().slideUp(400, function(){
+                        messageJQ.remove();
+                    })
+                }, 4000);
+            }
         </script>
     </head>
     <body>
@@ -135,7 +180,7 @@
             }else if (3 <= y && y < 10){
                 $("#a1").text("原来是个砖家，快请坐");
             }else if (10 <= y && y < 20){
-                $("#a1").text("是个老手");
+                $("#a1").text("原来你已经是个老手了");
             }else if (20 <= y && y <= 100){
                 $("#a1").text("你真的是电教员？");
             }else{
@@ -150,13 +195,13 @@
     }
 </script>
 
-<section id="q1">
+<article id="q1">
 <h3>热身问题：</h3>
 骚年，在网上冲了多久的浪呢？<br>
 <input id="i1">年
 <button id="b1" onclick="q1()">确定</button>
 <p id="a1_2"></p>
-</section>
+</article>
 
 <p id="a1"></p>
 
@@ -182,7 +227,7 @@ function q2(){
 }
 </script>
 
-<section>
+<article>
 <h3>小问题</h3>
 给他/她写信，最重要的是什么呢？<br>
 <span id="q2">
@@ -192,12 +237,12 @@ function q2(){
 <label><input name="c2" type="radio" value="wrong">D. 你有多喜欢他/她</label>
 <button onclick="q2()">确定</button>
 </span>
-<span style="font-size: 30px" id="a2_1"></span>
+<span id="a2_1"></span>
 <span id="a2_2"></span>
-</section>
+</article>
 
 <aside>
-<h4>小资料</h4>
+<b>小资料</b>
 <kbd>查看IP的方法</kbd><br>
 在“命令提示符”中输入ipconfig /all，你就能知道你的IP了。
 但是，这个IP通常是192.168.X.X(家庭环境)或10.188.X.X(学校机房)的形式。
@@ -211,7 +256,7 @@ function q2(){
 function update_ip(){
     let ip = Math.floor(Math.random()*256).toString()+"."+Math.floor(Math.random()*256).toString()+"."+Math.floor(Math.random()*256).toString()+"."+Math.floor(Math.random()*256).toString();
     $(".ip").text(ip);
-    setTimeout(update_ip, 500)
+    setTimeout(update_ip, 200)
 }
 $(".ip").ready(update_ip);
 </script>
@@ -227,15 +272,190 @@ $(".ip").ready(update_ip);
 <img src="../../../resources/img/doge.png" style="height:1.5em" alt="doge" title="doge"></p>
 <p>好了，回到正题。</p>
 <p>有同学问，如果是这样的话，怎么访问百度呢？</p>
-<p>答案是：输入<a href="http://36.152.44.95/">http://36.152.44.95/</a>(可能会有变动)</p>
 <aside>
-<h4>小资料</h4>
+<b>小资料</b>
 <kbd>查看网站的IP</kbd><br>
 在“命令提示符”中输入ping 网址(如www.baidu.com)
 方括号中的IP即为网站的IP<br>
 注：ping其实是一个用来测速的工具<br>
 注：大部分网站无法通过IP直接访问
-</aside></main>
+</aside>
+
+<p>答案是：输入<a id="lbd" href="http://36.152.44.95/"> http://36.152.44.95/ </a>(可能会有变动)</p>
+<p>你看的出来这几个数字与百度有什么内在联系么……
+或者说，你记得住这个IP吗……</p>
+<script type="application/javascript">
+q3_start = undefined;
+iid = undefined;
+function q3s(){
+    q3_start = Date.now();
+    $("#lbd").text("").removeAttr("href");
+    $("#b3").attr("disabled", "disabled").attr("onclick", "q3a()").text("确定");
+    iid = setInterval(q3i,1000);
+    showMessage("先往后面读吧，一会后有提醒哦", 2)
+}
+function q3i(){
+    let now = Date.now();
+    let past = now-q3_start;
+    if (past >= 10*60*1000){
+        clearInterval(iid);
+        showMessage("可以<a href='#a3'>开始答题</a>", 1);
+        $("#a3").removeAttr("placeholder").removeAttr("disabled");
+        $("#b3").text("确定").removeAttr("disabled");
+    } else {
+        let last = 10*60*1000 - past;
+        $("#a3").attr("placeholder", `还有${Math.floor(last / 60000)}:${Math.round(last/1000)%60}`)
+    }
+}
+function q3a(){
+    if ($("#a3").get(0).value === "36.152.44.95"){
+        $("#r3").text("记忆力还不错").addClass("right");
+        $("#lbd").text("http://36.152.44.95/").attr("href", "http://36.152.44.95/");
+    } else {
+        $("#r3").text("没关系，DNS帮你记住了").addClass("wrong");
+        $("#lbd").text("http://36.152.44.95/").attr("href", "http://36.152.44.95/");
+    }
+    $("#a3,#b3").remove()
+}
+</script>
+
+<article>
+<h3>小测验</h3>
+输入百度的IP(格式：X.X.X.X)<br>
+<input id="a3" placeholder="10分钟后可作答" disabled><button id="b3" onclick="q3s()">开始测试</button>
+<span id="r3"></span>
+</article>
+
+<p>不管你答没答对，你一定会发现：我们访问百度的正确姿势是<a href="https://www.baidu.com/">https://www.baidu.com/</a>。
+这又是怎么一回事呢？</p>
+<p>这就是DNS服务器的作用。</p>
+<p>在DNS服务器上，储存着像这样的数据：</p>
+<pre><code class="text">example.com     X.X.X.X
+github.com      X.X.X.X
+www.baidu.com   X.X.X.X
+# ......
+</code></pre>
+
+<aside>
+<b>小资料</b><kbd>hosts文件</kbd>
+在每一台电脑上，都有一个hosts文件。这个文件可以充当DNS服务器。
+当浏览器发现hosts文件中有对应网站的IP时，会优先使用里面的IP。
+这也就是为什么修改这个文件可以在一定程度上“越过长城，走向世界”。
+</aside>
+
+<p>当我们在网址栏输入“www.baidu.com”时，浏览器先向DNS询问其IP，随后再向结果IP发送请求。</p>
+<p>现在来总结一下上网的过程：</p>
+<ol>
+<li>
+<p>请求DNS</p>
+</li>
+<li>
+<p>DNS返回IP</p>
+</li>
+<li>
+<p>向服务器发送请求</p>
+</li>
+<li>
+<p>服务器返回响应</p>
+</li>
+</ol>
+<h2>2. 套接字、端口</h2>
+<p>我们已经了解了上网的过程，但这个过程究竟是由谁充当信使呢？</p>
+<p>答案是套接字。
+套接字的英文是socket，直译过来是“插座”。</p>
+<p>我们可以把计算机想象成一个有接口的机器，机器与机器之间通过管道相连。
+套接字就是这个“管道”。</p>
+<p>如果一台电脑只有一个管道，那肯定会乱了套：
+谁知道这个消息是浏览器的、QQ的、还是是微信的？</p>
+<aside>
+<b>小资料</b><kbd>常用端口</kbd>
+21:FTP
+23:Telnet
+25:SMTP
+53:DNS
+80:HTTP
+443:HTTPS
+注：这些端口也经常被木马所利用
+</aside>
+
+<p>于是，端口(port)就有了用武之地。
+一台计算机有0~65535共65536(2^16)个端口。0~1023号端口通常是著名的服务才能使用的，
+所以一般的应用只能使用1024号以上的端口。</p>
+<p>现在，我们对地址的描述应该是这样的了:X.X.X.X:PORT。</p>
+<h2>3. TCP、UDP、HTTP</h2>
+<aside>
+<b>小资料</b><kbd>ISO</kbd>
+ISO是国际标准化组织的简称，成立于1947年，是标准化领域中的一个国际组织，
+该组织自我定义为非政府组织，官方语言是英语、法语和俄语。ISO一来源于希腊语“ISOS”，其意为“平等”。
+<a href="https://baike.baidu.com/item/%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%E5%8C%96%E7%BB%84%E7%BB%87/779832?fromModule=lemma_search-box&fromtitle=iso&fromid=10400">[百度百科]</a>
+<kbd>OSI</kbd>
+OSI(Open System Interconnect,开放式系统互联)是ISO制定的一项标准，
+把网络通信的工作分为7层,分别是[最底层]物理层,数据链路层,网络层,运输层,会话层,表示层和应用层[最顶层]。
+</aside>
+
+<p>在起初，计算机无法构成大型网络的原因是“语言不通”，
+后来ISO发布了OSI标准，使得计算机网络得以实现。</p>
+<p>现如今，我们常接触到的信息传输发送有以下几种：</p>
+<h3>TCP</h3>
+<p>这是几个协议中最基础的协议了，很多协议都基于它。</p>
+<p>TCP连接是一种可靠、长效的连接方式，在初次连接时，需要两台计算机之间进行“三次握手”。
+只要一方不主动断开连接，连接就可以一直使用。</p>
+<p>正因为TCP的特点，它经常被用于一对一的可靠性数据传输上。</p>
+<h3>UDP</h3>
+<p>与TCP一样，UDP也是一种基础协议。</p>
+<p>但与TCP不同的是，UDP连接不需要三次握手(确切来讲，UDP不会建立连接)，数据传输不可靠；
+UDP也有优点：灵活、快速，一个UDP端口可以向多个不同地址发送数据。</p>
+<p>因为这些特点，UDP通常用于视频通话、多对多通讯等实时性强的传输上。</p>
+<h3>HTTP</h3>
+<aside>
+<b>小资料</b><kbd>HTTPS</kbd>
+日常生活中，很多网站的协议名是HTTPS，而不是HTTP。
+HTTPS(超文本传输安全协议)是HTTP的改进版本。
+HTTP的请求与回应是以明文传送的，使用是不安全的。
+而HTTPS添加了安全层加密，保证了信息安全。
+</aside>
+
+<p>HTTP(超文本传输协议)是网上冲浪时最常用的协议了。它基于TCP连接。</p>
+<p>HTTP在TCP的基础上扩充，使之可以传输其他内容，
+并有GET、POST等多种方法，
+添加了状态码，是目前所有网站的传输协议。</p>
+<p>由于这与网上冲浪密切相关，在下一目，我们将好好学习HTTP的有关知识。</p>
+<h2>小结</h2>
+<p>在这一目，我们学习了我们是怎样连接到外部世界的，下面是几道练习题和今天的作业，快去练练手吧！</p>
+<script>
+function e_click(event){
+    let b = $(event.target);
+    if (b.attr("right") !== undefined){
+        $("#show"+b.attr("name").slice(1)).removeClass('wrong').addClass('right').html("回答正确");
+    }else{
+        $("#show"+b.attr("name").slice(1)).removeClass('right').addClass('wrong').html(b.attr("show"));
+    }
+}
+$(()=>$("button[name]").click(e_click));
+</script>
+
+<article>
+<h3>练习题</h3>
+<p>
+1. 假如你是李华，你给你的外国朋友发送了自己编写的聊天程序，他/她应该填写哪一个地址，才能让两个程序建立连接呢？<br>
+<button name="e1" show="你确定有这么神奇">A. 中国江西省新余市小明</button><br>
+<button name="e1" show="这是QQ的信息还是微信的???">B. X.X.X.X</button><br>
+<button name="e1" right>C. X.X.X.X:PROT</button><br>
+<button name="e1" show="小明：我都没想到我这么厉害">D. XiaoMin.xyc.jxp.cn</button><br>
+<span id="show1"></span>
+</p>
+<p>
+2. 李华的聊天程序支持群聊(及多点数据传输)功能，他最有可能用的是<br>
+<button name="e2" show="“一只手，变很多只手！额，没成功……”">A. TCP</button>
+<button name="e2" right>B. UDP</button>
+<button name="e2" show="不至于，不至于，没这么麻烦">C. HTTP</button>
+<button name="e2" show="<del>这种东西就是要不安全才好</del>">D. HTTPS</button><br>
+<span id="show2"></span>
+</p>
+<h3>作业</h3>
+<label><input type="checkbox">多冲冲浪，了解有关内容。</label>
+<label><input type="checkbox">预习下一目内容。</label>
+</article></main>
         <footer>
         
             <nav>

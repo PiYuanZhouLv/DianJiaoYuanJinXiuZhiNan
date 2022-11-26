@@ -43,15 +43,44 @@
             }
             .right{
                 color: #00ff00;
+                font-size: 30px;
             }
             .right::before{
                 content: "✔";
             }
             .wrong{
                 color: #ff0000;
+                font-size: 30px;
             }
             .wrong::before{
                 content: "❌";
+            }
+            .showMessage{
+                padding: 10px 20px;
+                border-radius: 5px;
+                position: fixed;
+                top: 15%;
+                left: 50%;
+                color: #000000;
+                background-color: #FFFFFF;
+                border: 1px solid #F0F0F0;
+                z-index: 999;
+                transform: translate(-50%, 0);
+            }
+            .showMessageSuccess{
+                background-color: #F0F9EB;
+                border: 1px solid #E1F3D8;
+                color: #67C23A;
+            }
+            .showMessageError{
+                background-color: #FEF0F0;
+                border: 1px solid #FDE2E2;
+                color: #F76C6C;
+            }
+            .showMessageInfo{
+                background-color: #70C3E3;
+                border: 1px solid #13B8EB;
+                color: #FFFFFF;
             }
         </style>
         <script src="../resources/jquery-3.6.1.min.js" type="application/javascript"></script>
@@ -79,6 +108,22 @@
                     nav.insertBefore($("footer>:first-child"))
                 }
             );
+            function showMessage(message, type) {
+                let messageJQ = $("<div class='showMessage'>" + message + "</div>");
+                if (type === 0) {
+                    messageJQ.addClass("showMessageError");
+                } else if (type === 1) {
+                    messageJQ.addClass("showMessageSuccess");
+                } else if (type === 2) {
+                    messageJQ.addClass("showMessageInfo");
+                }
+                messageJQ.hide().appendTo("body").slideDown(400);
+                window.setTimeout(function(){
+                    messageJQ.show().slideUp(400, function(){
+                        messageJQ.remove();
+                    })
+                }, 4000);
+            }
         </script>
     </head>
     <body>
